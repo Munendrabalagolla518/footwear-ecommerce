@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanStep Shoes | Premium Footwear</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="sticky-header">
+        <nav class="container navbar">
+            <div class="logo">MUNI<span>STEP</span></div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search sneakers...">
+            </div>
+            <div class="nav-icons">
+                <div class="icon-btn" onclick="toggleWishlist()">
+                    <span class="icon">❤️</span>
+                    <span id="wishlist-count" class="badge">0</span>
+                </div>
+                <div class="icon-btn" onclick="toggleCart()">
+                    <span class="icon">🛒</span>
+                    <span id="cart-count" class="badge">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1>Walk Your Path With <br><span>Confidence</span></h1>
+            <p>Discover the latest collection of premium sneakers, sports shoes, and casual footwear designed for the modern step.</p>
+            <a href="#shop" class="btn btn-primary">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Main Store Section -->
+    <main id="shop" class="container store-container">
+        
+        <!-- Sidebar Filters -->
+        <aside class="filters-sidebar glass">
+            <h3>Filters</h3>
+            <div class="filter-group">
+                <h4>Category</h4>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-category="all">All Shoes</button>
+                    <button class="filter-btn" data-category="men">Men</button>
+                    <button class="filter-btn" data-category="women">Women</button>
+                    <button class="filter-btn" data-category="sports">Sports</button>
+                    <button class="filter-btn" data-category="casual">Casual</button>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Sort By Price</h4>
+                <select id="sortSelect">
+                    <option value="default">Relevance</option>
+                    <option value="low">Price: Low to High</option>
+                    <option value="high">Price: High to Low</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range (₹)</h4>
+                <input type="range" id="priceRange" min="1000" max="15000" step="500" value="15000">
+                <div class="price-labels">
+                    <span>₹1,000</span>
+                    <span id="priceValue">₹15,000</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Product Grid -->
+        <section class="products-view">
+            <div id="loading" class="hidden">Loading Products...</div>
+            <div id="productGrid" class="product-grid">
+                <!-- Products dynamically rendered here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-info">
+                <div class="logo">Muni<span>STEP</span></div>
+                <p>Premium quality shoes for every urban explorer. Established 2025.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="socials">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <span>FB</span> <span>IG</span> <span>TW</span>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">© 2025 MuniStep Shoes. All Rights Reserved.</p>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- Product Details Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content glass animate-slide">
+            <span class="close-modal" onclick="closeModal('productModal')">&times;</span>
+            <div id="modalBody" class="modal-flex">
+                <!-- Content injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlistModal" class="modal">
+        <div class="modal-content glass side-modal">
+            <span class="close-modal" onclick="closeModal('wishlistModal')">&times;</span>
+            <h2>Your Wishlist</h2>
+            <div id="wishlist-items" class="side-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content glass side-modal">
+            <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
+            <h2>Shopping Cart</h2>
+            <div id="cart-items" class="side-modal-body"></div>
+            <div class="cart-footer">
+                <div class="total-row">
+                    <span>Total:</span>
+                    <span id="cart-total-price">₹0</span>
+                </div>
+                <button class="btn btn-primary w-100" onclick="openCheckout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal" onclick="closeModal('checkoutModal')">&times;</span>
+            <h2>Final Checkout</h2>
+            <form id="checkoutForm" class="checkout-form">
+                <div class="form-grid">
+                    <input type="text" id="custName" placeholder="Full Name" required>
+                    <input type="email" id="custEmail" placeholder="Email Address" required>
+                    <input type="text" id="custAddr" placeholder="Shipping Address" required>
+                    <div id="orderSummary" class="order-summary"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Confirmation -->
+    <div id="orderConfirmModal" class="modal">
+        <div class="modal-content glass text-center">
+            <h1 class="success-icon">✅</h1>
+            <h2>Order Confirmed!</h2>
+            <p>Thank you for shopping with UrbanStep.</p>
+            <p>Order ID: <strong id="orderID"></strong></p>
+            <button class="btn btn-primary" onclick="location.reload()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <button id="scrollTop" title="Go to top">↑</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
